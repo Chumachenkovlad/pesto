@@ -15,7 +15,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@pesto/public-interfaces": ["libs/public-interfaces/src/index.ts"],
+      "@pesto/backend-entities": ["libs/backend-entities/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

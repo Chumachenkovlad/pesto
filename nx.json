@@ -18,5 +18,15 @@
       }
     }
   },
-  "projects": {}
+  "projects": {
+    "nest-posts-rest-api": {
+      "tags": []
+    },
+    "public-interfaces": {
+      "tags": []
+    },
+    "backend-entities": {
+      "tags": []
+    }
+  }
 }
