@@ -89,6 +89,32 @@
           }
         }
       }
+    },
+    "backend-nest-shared": {
+      "root": "libs/backend-nest-shared",
+      "sourceRoot": "libs/backend-nest-shared/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/backend-nest-shared/tsconfig.lib.json",
+              "libs/backend-nest-shared/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/backend-nest-shared/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/backend-nest-shared/jest.config.js",
+            "tsConfig": "libs/backend-nest-shared/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

@@ -17,7 +17,8 @@
     "baseUrl": ".",
     "paths": {
       "@pesto/public-interfaces": ["libs/public-interfaces/src/index.ts"],
-      "@pesto/backend-entities": ["libs/backend-entities/src/index.ts"]
+      "@pesto/backend-entities": ["libs/backend-entities/src/index.ts"],
+      "@pesto/backend-nest-shared": ["libs/backend-nest-shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

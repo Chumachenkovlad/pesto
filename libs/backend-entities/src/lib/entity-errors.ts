@@ -1,6 +1,7 @@
-export const EntituErrorsCodes = {
+export const EntityErrorsCodes = {
   LENGTH: 'LENGTH',
   UNIQUE: 'UNIQUE',
   INVALID_EMAIL: 'INVALID_EMAIL',
-  REQUIRED: 'REQUIRED'
+  REQUIRED: 'REQUIRED',
+  ENTITY_NOT_FOUND: 'ENTITY_NOT_FOUND'
 }

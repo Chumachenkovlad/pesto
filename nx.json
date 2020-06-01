@@ -27,6 +27,9 @@
     },
     "backend-entities": {
       "tags": []
+    },
+    "backend-nest-shared": {
+      "tags": []
     }
   }
 }

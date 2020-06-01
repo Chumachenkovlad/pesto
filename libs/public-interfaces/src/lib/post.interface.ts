@@ -13,3 +13,8 @@ export interface IPost {
   updatedAt: string;
   categories: ICategory[];
 }
+
+type RequiredPostProps = 'title' | 'slug' | 'body' | 'authorId';
+type AdditionalPostProps = 'imageUrl' | 'visible'
+
+export type IPostDto = Pick<IPost, RequiredPostProps> & Partial<Pick<IPost, AdditionalPostProps>>;
