@@ -3,5 +3,5 @@
   "compilerOptions": {
     "types": ["node"]
   },
-  "include": ["**/*.ts", "src/lib/comment.entityts"]
+  "include": ["**/*.ts", "src/lib/comment.entityts", "../shared/src/lib/const/entity-errors.ts"]
 }

@@ -30,6 +30,9 @@
     },
     "backend-nest-shared": {
       "tags": []
+    },
+    "shared": {
+      "tags": []
     }
   }
 }

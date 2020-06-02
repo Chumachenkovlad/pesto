@@ -1,27 +1,27 @@
 import { Module } from '@nestjs/common';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { ConfigModule, ConfigService } from '@pesto/backend-nest-shared';
 
-import {
-  CategoryModelModule
-} from './../../../../libs/backend-nest-shared/src/lib/models/category-model/category-model.module';
-import {
-  CommentsModelModule
-} from './../../../../libs/backend-nest-shared/src/lib/models/comments-model/comments-model.module';
-import { PostsModelModule } from './../../../../libs/backend-nest-shared/src/lib/models/posts-model/posts-model.module';
-import { UsersModelModule } from './../../../../libs/backend-nest-shared/src/lib/models/users-model/users-model.module';
-import { VotesModelModule } from './../../../../libs/backend-nest-shared/src/lib/models/votes-model/votes-model.module';
-import { UsersModelModule } from './../../../../libs/backend-nest-shared/src/lib/users-model.module';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { CategoriesModule } from './categories/categories.module';
+import { CommentsModule } from './comments/comments.module';
+import { PostsModule } from './posts/posts.module';
+import { UsersModule } from './users/users.module';
+import { VotesModule } from './votes/votes.module';
 
 @Module({
   imports: [
-        VotesModelModule,
-        UsersModelModule,
-        PostsModelModule,
-        CommentsModelModule,
-        CategoryModelModule,
-        UsersModelModule, ],
-  controllers: [AppController],
-  providers: [AppService],
+    UsersModule,
+    PostsModule,
+    VotesModule,
+    CommentsModule,
+    CategoriesModule,
+    ConfigModule,
+    SequelizeModule.forRootAsync({
+      imports: [ConfigModule],
+      useExisting: ConfigService
+    })
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

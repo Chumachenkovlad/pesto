@@ -1,5 +1,7 @@
 
-export * from './lib/entities';
-export * from './lib/dtos';
-export * from './lib/filters';
-export * from './lib/entity-errors';
+export * from './lib/category';
+export * from './lib/comment';
+export * from './lib/post';
+export * from './lib/user';
+export * from './lib/vote';
+
