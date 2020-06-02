@@ -8,7 +8,7 @@ import { BaseEntityService } from '../../base/base-entity.service';
 
 @Injectable()
 export class CategoryModelService extends BaseEntityService<Category, CategoryDto, CategoryFilter> {
-  protected findAllEntityAttributes = ['id', 'name'];
+  protected entityAttributes = ['id', 'name'];
   constructor(
     @InjectModel(Category)
     model: typeof Category,

@@ -5,4 +5,5 @@ export class UserDto implements IUserDto {
   lastName?: string;
   avatarUrl?: string;
   email: string;
+  password: string;
 }

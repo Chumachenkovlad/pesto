@@ -8,7 +8,7 @@ import { BaseEntityService } from '../../base/base-entity.service';
 
 @Injectable()
 export class CommentsModelService extends BaseEntityService<Comment, CommentDto, CommentFilter> {
-  protected findAllEntityAttributes = ['id', 'body', 'authorId', 'postId'];
+  protected entityAttributes = ['id', 'body', 'authorId', 'postId'];
   constructor(
     @InjectModel(Comment)
     model: typeof Comment,

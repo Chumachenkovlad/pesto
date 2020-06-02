@@ -28,7 +28,7 @@ const coerceFilterToWhereObject = <T extends object>(filter: T) => {
   })
 }
 
-export abstract class BaseEntityService<M extends Model<M>, D extends object = any, F extends object = any>
+export abstract class BaseEntityService<M extends Model<M>, D extends object = any, F extends object = any, T extends object>
   implements OnModuleInit {
   protected defaultQuery: IFindAllQuery<F> = {};
   protected defaultSorting: Partial<ISorting> = {};
@@ -36,7 +36,7 @@ export abstract class BaseEntityService<M extends Model<M>, D extends object = a
     limit: DEFAULT_LIMIT,
     offset: 0
   };
-  protected abstract findAllEntityAttributes: (string)[] = [];
+  protected abstract entityAttributes: string[] = [];
 
   onModuleInit() {
     this.defaultQuery = merge(
@@ -53,10 +53,10 @@ export abstract class BaseEntityService<M extends Model<M>, D extends object = a
     protected sequelize: Sequelize
   ) {}
 
-  async create(dto: D): Promise<M> {
+  async create(dto: D) {
     const id = createUuid();
-    const model = await  this.model.create({id, ...dto}, { raw: true });
-    return model as M;
+    const model =  await this.model.create({id, ...dto}, {raw: true});
+    return this.findById(model.id);
   }
 
   async update(id: string, dto: D) {
@@ -74,7 +74,9 @@ export abstract class BaseEntityService<M extends Model<M>, D extends object = a
   }
 
   async findById(id: string) {
-    return this.model.findOne({ where: { id } });
+    return this.model.findByPk(id, {
+      attributes: this.entityAttributes
+    });
   }
 
   async findAll(
@@ -91,7 +93,7 @@ export abstract class BaseEntityService<M extends Model<M>, D extends object = a
       offset,
       where: coerceFilterToWhereObject(filter || {}),
       order: sorting ? [[sorting.prop, sorting.direction]] : [],
-      attributes: this.findAllEntityAttributes
+      attributes: this.entityAttributes
     });
 
     return {

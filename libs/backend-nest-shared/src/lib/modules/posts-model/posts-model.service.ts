@@ -7,7 +7,7 @@ import { BaseEntityService } from '../../base/base-entity.service';
 
 @Injectable()
 export class PostsModelService extends BaseEntityService<Post, PostDto, PostFilter> {
-  protected findAllEntityAttributes = ['id', 'body', 'title', 'slug', 'body', 'imageUrl', 'authorId'];
+  protected entityAttributes = ['id', 'body', 'title', 'slug', 'body', 'imageUrl', 'authorId'];
 
   constructor(
     @InjectModel(Post)

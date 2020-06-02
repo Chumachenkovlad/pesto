@@ -7,7 +7,7 @@ import { BaseEntityService } from '../../base/base-entity.service';
 
 @Injectable()
 export class UsersModelService extends BaseEntityService<User, UserDto, UserFilter> {
-  protected findAllEntityAttributes = ['id', 'firstName', 'lastName', 'avatarUrl'];
+  protected entityAttributes = ['id', 'firstName', 'lastName', 'avatarUrl'];
   constructor(
     @InjectModel(User)
     model: typeof User,
