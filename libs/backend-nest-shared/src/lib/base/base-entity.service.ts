@@ -28,7 +28,7 @@ const coerceFilterToWhereObject = <T extends object>(filter: T) => {
   })
 }
 
-export abstract class BaseEntityService<M extends Model<M>, D extends object = any, F extends object = any, T extends object>
+export abstract class BaseEntityService<M extends Model<M>, D extends object = any, F extends object = any>
   implements OnModuleInit {
   protected defaultQuery: IFindAllQuery<F> = {};
   protected defaultSorting: Partial<ISorting> = {};
