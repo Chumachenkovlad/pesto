@@ -1,57 +1,88 @@
 import { IPost } from '@pesto/public-interfaces';
+import { IsUUID4, Required } from '@pesto/shared';
 import {
-    AllowNull,
     BelongsTo,
+    BelongsToMany,
     Column,
     CreatedAt,
+    Default,
+    DefaultScope,
     ForeignKey,
+    HasMany,
     IsUrl,
-    IsUUID,
     Model,
     PrimaryKey,
+    Scopes,
     Table,
     UpdatedAt
 } from 'sequelize-typescript';
 
-import { Category } from '../category/category.entity';
-import { User } from '../user/user.entity';
+import { CategoryModel } from '../category/category.entity';
+import { CommentModel } from '../comment/comment.entity';
+import { PostCategoryModel } from '../relations/post-category.entity';
+import { UserModel } from '../user/user.entity';
+import { VoteModel } from '../vote/vote.entity';
 
+@DefaultScope({
+  attributes: ['id', 'slug', 'title', 'avatarUrl'],
+  order: ['title', 'DESC'],
+  where: {
+    visible: true,
+  },
+})
+@Scopes({
+  full: {
+    attributes: [
+      'id',
+      'slug',
+      'title',
+      'avatarUrl',
+      'comments',
+      'author',
+      'cagories',
+    ],
+    include: [
+      () => CommentModel,
+      () => UserModel,
+      () => CategoryModel,
+      () => VoteModel,
+    ],
+  },
+})
 @Table({
   tableName: 'posts',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
 })
-export class Post extends Model<Post> implements IPost {
+export class PostModel extends Model<PostModel> implements IPost {
   @PrimaryKey
-  @IsUUID(4)
+  @IsUUID4
   @Column
   id: string;
 
-  @AllowNull(false)
-  @IsUUID(4)
-  @ForeignKey(() => User)
-  @Column
-  authorId: string;
-
-  @AllowNull(false)
+  @Required
   @Column
   slug: string;
 
-  @AllowNull(false)
+  @Required
   @Column
   title: string;
 
-  @AllowNull(false)
+  @Required
   @Column
   body: string;
 
-  @AllowNull(true)
+  @Default('')
   @IsUrl
   @Column
   imageUrl: string;
 
+  /* 
+    TODO: Reserch when to update votesCount
+  */
   votesCount: number;
 
+  @Default(false)
   @Column
   visible: boolean;
 
@@ -63,9 +94,21 @@ export class Post extends Model<Post> implements IPost {
   @UpdatedAt
   updatedAt: string;
 
-  @ForeignKey(() => Category)
-  categoryId: string;
+  @ForeignKey(() => UserModel)
+  @Required
+  @IsUUID4
+  @Column
+  authorId: string;
 
-  @BelongsTo(() => Category)
-  categories: Category[];
+  @BelongsTo(() => UserModel)
+  author: UserModel;
+
+  @BelongsToMany(() => CategoryModel, () => PostCategoryModel)
+  categories: CategoryModel[];
+
+  @HasMany(() => VoteModel)
+  votes: VoteModel[];
+
+  @HasMany(() => CommentModel)
+  comments: CommentModel[];
 }

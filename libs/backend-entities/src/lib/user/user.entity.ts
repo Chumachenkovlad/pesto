@@ -1,72 +1,86 @@
 import { IUser } from '@pesto/public-interfaces';
-import { EntityErrorsCodes } from '@pesto/shared';
+import { EntityErrorsCodes, IsUUID4, LengthValidator, Required } from '@pesto/shared';
 import * as crypto from 'crypto';
 import {
-  AllowNull,
-  BeforeCreate,
-  BeforeUpdate,
-  Column,
-  DataType,
-  IsUrl,
-  IsUUID,
-  Length,
-  Model,
-  NotEmpty,
-  PrimaryKey,
-  Table
+    BeforeCreate,
+    BeforeUpdate,
+    Column,
+    DataType,
+    Default,
+    DefaultScope,
+    HasMany,
+    IsUrl,
+    Model,
+    PrimaryKey,
+    Scopes,
+    Table
 } from 'sequelize-typescript';
 
+import { CommentModel } from '../comment/comment.entity';
+import { PostModel } from '../post/post.entity';
+import { VoteModel } from '../vote/vote.entity';
 
 const DEFAULT_BYTE_SIZE = 16;
 const DEFAULT_ITERATIONS = 10000;
 const DEFAULT_KEY_LENGTH = 64;
 
+@DefaultScope({
+  attributes: ['id', 'lastName', 'firstName', 'avatarUrl'],
+  order: ['lastName', 'DESC'],
+})
+@Scopes({
+  full: {
+    include: [() => PostModel, () => CommentModel, () => VoteModel],
+  },
+})
 @Table({
   tableName: 'users',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
 })
-export class User extends Model<User> implements IUser {
+export class UserModel extends Model<UserModel> implements IUser {
   @PrimaryKey
-  @IsUUID(4)
+  @IsUUID4
   @Column
   id: string;
 
-  @Length({ min: 2, max: 100, msg: EntityErrorsCodes.LENGTH })
-  @NotEmpty({ msg: EntityErrorsCodes.REQUIRED })
+  @LengthValidator(2, 100)
+  @Required
   @Column
   firstName: string;
 
-  @Length({ min: 2, max: 100, msg: EntityErrorsCodes.LENGTH })
-  @NotEmpty({ msg: EntityErrorsCodes.REQUIRED })
+  @LengthValidator(2, 100)
+  @Required
   @Column
   lastName: string;
 
-
-  @AllowNull(true)
+  @Default('')
   @IsUrl
   @Column
   avatarUrl: string;
 
-  @AllowNull(false)
   @Column({
     type: DataType.STRING(45),
     unique: { name: 'unique_email_id', msg: EntityErrorsCodes.UNIQUE },
     validate: {
       isEmail: { msg: EntityErrorsCodes.INVALID_EMAIL },
-      notEmpty: { msg: EntityErrorsCodes.REQUIRED }
-    }
+      notEmpty: { msg: EntityErrorsCodes.REQUIRED },
+    },
   })
   email: string;
 
-  @AllowNull(false)
-  @Column({
-    type: DataType.VIRTUAL,
-    validate: {
-      notEmpty: { msg: EntityErrorsCodes.REQUIRED }
-    }
-  })
+  @Required
+  @Column({ type: DataType.VIRTUAL })
   password: string;
+
+  @HasMany(() => VoteModel, 'authorId')
+  votes: VoteModel[];
+
+  @HasMany(() => PostModel, 'authorId')
+  posts: PostModel[];
+
+  @HasMany(() => CommentModel, 'authorId')
+  comments: CommentModel[];
 
   @Column
   hashedPassword: string;
@@ -75,12 +89,12 @@ export class User extends Model<User> implements IUser {
   salt: string;
 
   @BeforeCreate
-  static async createPassword(user: User) {
+  static async createPassword(user: UserModel) {
     await user._updatePassword();
   }
 
   @BeforeUpdate
-  static async updatePassword(user: User) {
+  static async updatePassword(user: UserModel) {
     if (user.changed('password')) {
       await user._updatePassword();
     }

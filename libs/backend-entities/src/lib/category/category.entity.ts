@@ -1,18 +1,26 @@
 import { ICategory } from '@pesto/public-interfaces';
-import { AllowNull, Column, IsUUID, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import { IsUUID4, Required } from '@pesto/shared';
+import { BelongsToMany, Column, DefaultScope, Model, PrimaryKey, Table } from 'sequelize-typescript';
 
+import { PostModel } from '../post/post.entity';
+import { PostCategoryModel } from '../relations/post-category.entity';
+
+@DefaultScope({
+  attributes: ['id', 'name'],
+})
 @Table({
   tableName: 'categories',
-  timestamps: true,
-  paranoid: true
 })
-export class Category extends Model<Category> implements ICategory {
+export class CategoryModel extends Model<CategoryModel> implements ICategory {
   @PrimaryKey
-  @IsUUID(4)
+  @IsUUID4
   @Column
   id: string;
 
-  @AllowNull(false)
+  @Required
   @Column
   name: string;
+
+  @BelongsToMany(() => PostModel, () => PostCategoryModel)
+  posts: PostModel[];
 }

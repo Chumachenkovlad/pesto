@@ -1,27 +1,32 @@
 import { IVote } from '@pesto/public-interfaces';
-import { Column, ForeignKey, IsUUID, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import { IsUUID4, Required } from '@pesto/shared';
+import { BelongsTo, Column, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
 
-import { Post } from '../post/post.entity';
-import { User } from '../user/user.entity';
+import { PostModel } from '../post/post.entity';
+import { UserModel } from '../user/user.entity';
 
-@Table({
-  tableName: 'votes',
-  timestamps: true,
-  paranoid: true
-})
-export class Vote extends Model<Vote> implements IVote {
+@Table({ tableName: 'votes' })
+export class VoteModel extends Model<VoteModel> implements IVote {
+  @IsUUID4
   @PrimaryKey
-  @IsUUID(4)
   @Column
   id: string;
 
-  @IsUUID(4)
-  @ForeignKey(() => Post)
+  @ForeignKey(() => PostModel)
+  @IsUUID4
+  @Required
   @Column
   postId: string;
 
-  @IsUUID(4)
-  @ForeignKey(() => User)
+  @ForeignKey(() => UserModel)
+  @IsUUID4
+  @Required
   @Column
   authorId: string;
+
+  @BelongsTo(() => UserModel)
+  author: UserModel;
+
+  @BelongsTo(() => PostModel)
+  post: PostModel;
 }

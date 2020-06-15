@@ -1,22 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { User, UserDto, UserFilter } from '@pesto/backend-entities';
+import { UserDto, UserFilter, UserModel } from '@pesto/backend-entities';
 import { Sequelize } from 'sequelize-typescript';
 
 import { BaseEntityService } from '../../base/base-entity.service';
 
 @Injectable()
-export class UsersModelService extends BaseEntityService<User, UserDto, UserFilter> {
+export class UsersModelService extends BaseEntityService<UserModel, UserDto, UserFilter> {
   protected entityAttributes = ['id', 'firstName', 'lastName', 'avatarUrl'];
   constructor(
-    @InjectModel(User)
-    model: typeof User,
+    @InjectModel(UserModel)
+    model: typeof UserModel,
     sequelize: Sequelize
   ) {
     super(model, sequelize);
   }
 
-  async findByEmail(email: string): Promise<User> {
-    return this.model.findOne<User>({ where: { email } });
+  async findByEmail(email: string): Promise<UserModel> {
+    return this.model.findOne<UserModel>({ where: { email } });
   }
 }

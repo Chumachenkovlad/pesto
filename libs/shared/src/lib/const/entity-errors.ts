@@ -1,5 +1,5 @@
 export const EntityErrorsCodes = {
-  LENGTH: 'LENGTH',
+  LENGTH: (min, max) => `LENGTH;min:${min};max:${max}`,
   UNIQUE: 'UNIQUE',
   INVALID_EMAIL: 'INVALID_EMAIL',
   REQUIRED: 'REQUIRED',

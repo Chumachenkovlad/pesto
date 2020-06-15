@@ -1,4 +1,5 @@
 import { SequelizeModuleOptions, SequelizeOptionsFactory } from '@nestjs/sequelize';
+import { CategoryModel, CommentModel, PostModel, UserModel } from '@pesto/backend-entities';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 
@@ -49,7 +50,7 @@ export class ConfigService implements SequelizeOptionsFactory {
       database: this.get(ConfigKeys.DB_DATABASE),
       autoLoadModels: true,
       synchronize: true,
-      //models: [User, Post, Comment, Vote, Category]
+      models: [UserModel, PostModel, CommentModel, CategoryModel]
     };
   }
 }

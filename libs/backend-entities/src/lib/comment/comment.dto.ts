@@ -1,6 +1,6 @@
-import { ICommentDto } from '@pesto/public-interfaces';
+import { ICommentMessageDto } from '@pesto/public-interfaces';
 
-export class CommentDto implements ICommentDto {
+export class CommentMessageDto implements ICommentMessageDto {
   body: string;
   postId: string;
   authorId: string;

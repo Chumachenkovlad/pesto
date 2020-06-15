@@ -1,211 +1,232 @@
 {
-  "version": 1,
-  "projects": {
-    "nest-posts-rest-api": {
-      "root": "apps/nest-posts-rest-api",
-      "sourceRoot": "apps/nest-posts-rest-api/src",
-      "projectType": "application",
-      "prefix": "nest-posts-rest-api",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "options": {
-            "outputPath": "dist/apps/nest-posts-rest-api",
-            "main": "apps/nest-posts-rest-api/src/main.ts",
-            "tsConfig": "apps/nest-posts-rest-api/tsconfig.app.json",
-            "assets": ["apps/nest-posts-rest-api/src/assets"]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/nest-posts-rest-api/src/environments/environment.ts",
-                  "with": "apps/nest-posts-rest-api/src/environments/environment.prod.ts"
+    "version": 1,
+    "projects": {
+        "nest-posts-rest-api": {
+            "root": "apps/nest-posts-rest-api",
+            "sourceRoot": "apps/nest-posts-rest-api/src",
+            "projectType": "application",
+            "prefix": "nest-posts-rest-api",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/node:build",
+                    "options": {
+                        "outputPath": "dist/apps/nest-posts-rest-api",
+                        "main": "apps/nest-posts-rest-api/src/main.ts",
+                        "tsConfig": "apps/nest-posts-rest-api/tsconfig.app.json",
+                        "assets": [
+                            "apps/nest-posts-rest-api/src/assets"
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "optimization": true,
+                            "extractLicenses": true,
+                            "inspect": false,
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/nest-posts-rest-api/src/environments/environment.ts",
+                                    "with": "apps/nest-posts-rest-api/src/environments/environment.prod.ts"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@nrwl/node:execute",
+                    "options": {
+                        "buildTarget": "nest-posts-rest-api:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:lint",
+                    "options": {
+                        "linter": "eslint",
+                        "config": "apps/nest-posts-rest-api/.eslintrc",
+                        "tsConfig": [
+                            "apps/nest-posts-rest-api/tsconfig.app.json",
+                            "apps/nest-posts-rest-api/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!apps/nest-posts-rest-api/**"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "apps/nest-posts-rest-api/jest.config.js",
+                        "tsConfig": "apps/nest-posts-rest-api/tsconfig.spec.json",
+                        "passWithNoTests": true
+                    }
                 }
-              ]
             }
-          }
         },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "nest-posts-rest-api:build"
-          }
+        "public-interfaces": {
+            "root": "libs/public-interfaces",
+            "sourceRoot": "libs/public-interfaces/src",
+            "projectType": "library",
+            "schematics": {},
+            "architect": {
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/public-interfaces/tsconfig.lib.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!libs/public-interfaces/**"
+                        ]
+                    }
+                }
+            }
         },
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "config": "apps/nest-posts-rest-api/.eslintrc",
-            "tsConfig": [
-              "apps/nest-posts-rest-api/tsconfig.app.json",
-              "apps/nest-posts-rest-api/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!apps/nest-posts-rest-api/**"]
-          }
+        "backend-entities": {
+            "root": "libs/backend-entities",
+            "sourceRoot": "libs/backend-entities/src",
+            "projectType": "library",
+            "schematics": {},
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:lint",
+                    "options": {
+                        "linter": "eslint",
+                        "config": "libs/backend-entities/.eslintrc",
+                        "tsConfig": [
+                            "libs/backend-entities/tsconfig.lib.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!libs/backend-entities/**"
+                        ]
+                    }
+                }
+            }
         },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/nest-posts-rest-api/jest.config.js",
-            "tsConfig": "apps/nest-posts-rest-api/tsconfig.spec.json",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "public-interfaces": {
-      "root": "libs/public-interfaces",
-      "sourceRoot": "libs/public-interfaces/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["libs/public-interfaces/tsconfig.lib.json"],
-            "exclude": ["**/node_modules/**", "!libs/public-interfaces/**"]
-          }
-        }
-      }
-    },
-    "backend-entities": {
-      "root": "libs/backend-entities",
-      "sourceRoot": "libs/backend-entities/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "config": "libs/backend-entities/.eslintrc",
-            "tsConfig": ["libs/backend-entities/tsconfig.lib.json"],
-            "exclude": ["**/node_modules/**", "!libs/backend-entities/**"]
-          }
-        }
-      }
-    },
-    "backend-nest-shared": {
-      "root": "libs/backend-nest-shared",
-      "sourceRoot": "libs/backend-nest-shared/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/backend-nest-shared/tsconfig.lib.json",
-              "libs/backend-nest-shared/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/backend-nest-shared/**"]
-          }
+        "backend-nest-shared": {
+            "root": "libs/backend-nest-shared",
+            "sourceRoot": "libs/backend-nest-shared/src",
+            "projectType": "library",
+            "schematics": {},
+            "architect": {
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "libs/backend-nest-shared/tsconfig.lib.json",
+                            "libs/backend-nest-shared/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!libs/backend-nest-shared/**"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/backend-nest-shared/jest.config.js",
+                        "tsConfig": "libs/backend-nest-shared/tsconfig.spec.json",
+                        "passWithNoTests": true
+                    }
+                }
+            }
         },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/backend-nest-shared/jest.config.js",
-            "tsConfig": "libs/backend-nest-shared/tsconfig.spec.json",
-            "passWithNoTests": true
-          }
+        "shared": {
+            "root": "libs/shared",
+            "sourceRoot": "libs/shared/src",
+            "projectType": "library",
+            "schematics": {},
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:lint",
+                    "options": {
+                        "linter": "eslint",
+                        "config": "libs/shared/.eslintrc",
+                        "tsConfig": [
+                            "libs/shared/tsconfig.lib.json",
+                            "libs/shared/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!libs/shared/**"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "libs/shared/jest.config.js",
+                        "tsConfig": "libs/shared/tsconfig.spec.json",
+                        "passWithNoTests": true
+                    }
+                }
+            }
         }
-      }
     },
-    "shared": {
-      "root": "libs/shared",
-      "sourceRoot": "libs/shared/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "config": "libs/shared/.eslintrc",
-            "tsConfig": [
-              "libs/shared/tsconfig.lib.json",
-              "libs/shared/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/shared/**"]
-          }
+    "cli": {
+        "defaultCollection": "@nrwl/nest"
+    },
+    "schematics": {
+        "@nrwl/workspace": {
+            "library": {
+                "linter": "eslint"
+            }
         },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/shared/jest.config.js",
-            "tsConfig": "libs/shared/tsconfig.spec.json",
-            "passWithNoTests": true
-          }
+        "@nrwl/cypress": {
+            "cypress-project": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/react": {
+            "application": {
+                "linter": "eslint"
+            },
+            "library": {
+                "linter": "eslint"
+            },
+            "storybook-configuration": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/next": {
+            "application": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/web": {
+            "application": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/node": {
+            "application": {
+                "linter": "eslint"
+            },
+            "library": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/nx-plugin": {
+            "plugin": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/nest": {
+            "application": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/express": {
+            "application": {
+                "linter": "eslint"
+            },
+            "library": {
+                "linter": "eslint"
+            }
         }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/nest"
-  },
-  "schematics": {
-    "@nrwl/workspace": {
-      "library": {
-        "linter": "eslint"
-      }
     },
-    "@nrwl/cypress": {
-      "cypress-project": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/react": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/next": {
-      "application": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/web": {
-      "application": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/node": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/nx-plugin": {
-      "plugin": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/nest": {
-      "application": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/express": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      }
-    }
-  },
-  "defaultProject": "nest-posts-rest-api"
+    "defaultProject": "nest-posts-rest-api"
 }

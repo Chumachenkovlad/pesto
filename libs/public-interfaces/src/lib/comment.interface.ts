@@ -1,4 +1,4 @@
-export interface IComment {
+export interface ICommentMessage {
   id: string;
   authorId: string;
   postId: string;
@@ -7,4 +7,4 @@ export interface IComment {
   updatedAt: string;
 }
 
-export type ICommentDto = Omit<IComment, 'id' |'createdAt' | 'updatedAt'>;
+export type ICommentMessageDto = Omit<ICommentMessage, 'id' |'createdAt' | 'updatedAt'>;

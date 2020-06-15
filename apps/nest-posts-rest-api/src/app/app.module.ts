@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
-import { SequelizeModule } from '@nestjs/sequelize';
-import { ConfigModule, ConfigService } from '@pesto/backend-nest-shared';
+import { ConfigModule, RootDatabaseModule } from '@pesto/backend-nest-shared';
 
 import { CategoriesModule } from './categories/categories.module';
 import { CommentsModule } from './comments/comments.module';
@@ -11,15 +10,12 @@ import { VotesModule } from './votes/votes.module';
 @Module({
   imports: [
     UsersModule,
+    CategoriesModule,
     PostsModule,
     VotesModule,
     CommentsModule,
-    CategoriesModule,
     ConfigModule,
-    SequelizeModule.forRootAsync({
-      imports: [ConfigModule],
-      useExisting: ConfigService
-    })
+    RootDatabaseModule,
   ],
   controllers: [],
   providers: [],
