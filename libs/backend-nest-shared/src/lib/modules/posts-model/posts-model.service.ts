@@ -6,9 +6,11 @@ import { Sequelize } from 'sequelize-typescript';
 import { BaseEntityService } from '../../base/base-entity.service';
 
 @Injectable()
-export class PostsModelService extends BaseEntityService<PostModel, PostDto, PostFilter> {
-  protected entityAttributes = ['id', 'body', 'title', 'slug', 'body', 'imageUrl', 'authorId'];
-
+export class PostsModelService extends BaseEntityService<
+  PostModel,
+  PostDto,
+  PostFilter
+> {
   constructor(
     @InjectModel(PostModel)
     model: typeof PostModel,

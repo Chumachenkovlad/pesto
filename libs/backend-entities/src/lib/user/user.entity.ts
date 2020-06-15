@@ -26,7 +26,7 @@ const DEFAULT_KEY_LENGTH = 64;
 
 @DefaultScope({
   attributes: ['id', 'lastName', 'firstName', 'avatarUrl'],
-  order: ['lastName', 'DESC'],
+  order: [['lastName', 'DESC']],
 })
 @Scopes({
   full: {

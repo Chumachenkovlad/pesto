@@ -6,8 +6,11 @@ import { Sequelize } from 'sequelize-typescript';
 import { BaseEntityService } from '../../base/base-entity.service';
 
 @Injectable()
-export class VotesModelService extends BaseEntityService<VoteModel, VoteDto, VoteFilter> {
-  protected entityAttributes = ['id', 'authorId', 'postId'];
+export class VotesModelService extends BaseEntityService<
+  VoteModel,
+  VoteDto,
+  VoteFilter
+> {
   constructor(
     @InjectModel(VoteModel)
     model: typeof VoteModel,
@@ -16,4 +19,3 @@ export class VotesModelService extends BaseEntityService<VoteModel, VoteDto, Vot
     super(model, sequelize);
   }
 }
-

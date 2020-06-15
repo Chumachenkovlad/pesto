@@ -4,7 +4,7 @@ import {
     BelongsTo,
     BelongsToMany,
     Column,
-    CreatedAt,
+    DataType,
     Default,
     DefaultScope,
     ForeignKey,
@@ -13,8 +13,7 @@ import {
     Model,
     PrimaryKey,
     Scopes,
-    Table,
-    UpdatedAt
+    Table
 } from 'sequelize-typescript';
 
 import { CategoryModel } from '../category/category.entity';
@@ -24,8 +23,8 @@ import { UserModel } from '../user/user.entity';
 import { VoteModel } from '../vote/vote.entity';
 
 @DefaultScope({
-  attributes: ['id', 'slug', 'title', 'avatarUrl'],
-  order: ['title', 'DESC'],
+  attributes: ['id', 'slug', 'title', 'imageUrl'],
+  order: [['title', 'DESC']],
   where: {
     visible: true,
   },
@@ -36,7 +35,7 @@ import { VoteModel } from '../vote/vote.entity';
       'id',
       'slug',
       'title',
-      'avatarUrl',
+      'imageUrl',
       'comments',
       'author',
       'cagories',
@@ -69,10 +68,11 @@ export class PostModel extends Model<PostModel> implements IPost {
   title: string;
 
   @Required
-  @Column
+  @Column({
+    type: DataType.TEXT({ length: 'long' }),
+  })
   body: string;
 
-  @Default('')
   @IsUrl
   @Column
   imageUrl: string;
@@ -82,16 +82,12 @@ export class PostModel extends Model<PostModel> implements IPost {
   */
   votesCount: number;
 
-  @Default(false)
+  @Default(true)
   @Column
   visible: boolean;
 
-  @Column
-  @CreatedAt
   createdAt: string;
 
-  @Column
-  @UpdatedAt
   updatedAt: string;
 
   @ForeignKey(() => UserModel)

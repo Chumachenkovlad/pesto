@@ -6,8 +6,11 @@ import { Sequelize } from 'sequelize-typescript';
 import { BaseEntityService } from '../../base/base-entity.service';
 
 @Injectable()
-export class UsersModelService extends BaseEntityService<UserModel, UserDto, UserFilter> {
-  protected entityAttributes = ['id', 'firstName', 'lastName', 'avatarUrl'];
+export class UsersModelService extends BaseEntityService<
+  UserModel,
+  UserDto,
+  UserFilter
+> {
   constructor(
     @InjectModel(UserModel)
     model: typeof UserModel,

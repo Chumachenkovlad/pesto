@@ -3,15 +3,13 @@ import { IsUUID4, Required } from '@pesto/shared';
 import {
     BelongsTo,
     Column,
-    CreatedAt,
     Default,
     DefaultScope,
     ForeignKey,
     Model,
     PrimaryKey,
     Scopes,
-    Table,
-    UpdatedAt
+    Table
 } from 'sequelize-typescript';
 
 import { PostModel } from '../post/post.entity';
@@ -19,6 +17,7 @@ import { UserModel } from '../user/user.entity';
 
 @DefaultScope({
   attributes: ['id', 'body', 'createdAt', 'updatedAt'],
+  order: [['createAt', 'DESC']],
 })
 @Scopes({
   full: {
@@ -55,12 +54,8 @@ export class CommentModel extends Model<CommentModel>
   @Column
   authorId: string;
 
-  @CreatedAt
-  @Column
   createdAt: string;
 
-  @UpdatedAt
-  @Column
   updatedAt: string;
 
   @BelongsTo(() => PostModel)
