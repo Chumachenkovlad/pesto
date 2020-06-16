@@ -11,6 +11,7 @@ export * from './lib/vote';
 export * from './lib/relations';
 export * from './lib/post';
 export * from './lib/user';
+export * from './lib/shared';
 
 export const MODELS = [
   UserModel,

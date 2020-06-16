@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IPost } from '@pesto/public-interfaces';
 import { IsUUID4, Required } from '@pesto/shared';
 import {
@@ -96,12 +97,15 @@ export class PostModel extends Model<PostModel> implements IPost {
   @Column
   authorId: string;
 
+  @ApiProperty({ type: () => UserModel })
   @BelongsTo(() => UserModel)
   author: UserModel;
 
+  @ApiProperty({ type: () => [CategoryModel] })
   @BelongsToMany(() => CategoryModel, () => PostCategoryModel)
   categories: CategoryModel[];
 
+  @ApiProperty({ type: () => [VoteModel] })
   @HasMany(() => VoteModel)
   votes: VoteModel[];
 

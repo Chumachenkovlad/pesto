@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IVote } from '@pesto/public-interfaces';
 import { IsUUID4, Required } from '@pesto/shared';
 import { BelongsTo, Column, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
@@ -24,9 +25,11 @@ export class VoteModel extends Model<VoteModel> implements IVote {
   @Column
   authorId: string;
 
+  @ApiProperty({ type: () => UserModel })
   @BelongsTo(() => UserModel)
   author: UserModel;
 
+  @ApiProperty({ type: () => PostModel })
   @BelongsTo(() => PostModel)
   post: PostModel;
 }

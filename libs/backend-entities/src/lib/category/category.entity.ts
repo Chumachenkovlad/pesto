@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { ICategory } from '@pesto/public-interfaces';
 import { IsUUID4, Required } from '@pesto/shared';
 import { BelongsToMany, Column, DefaultScope, Model, PrimaryKey, Table } from 'sequelize-typescript';
@@ -21,6 +22,7 @@ export class CategoryModel extends Model<CategoryModel> implements ICategory {
   @Column
   name: string;
 
+  @ApiProperty({ type: () => [PostModel] })
   @BelongsToMany(() => PostModel, () => PostCategoryModel)
   posts: PostModel[];
 }

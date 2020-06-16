@@ -1,3 +1,4 @@
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { IUser } from '@pesto/public-interfaces';
 import { EntityErrorsCodes, IsUUID4, LengthValidator, Required } from '@pesto/shared';
 import * as crypto from 'crypto';
@@ -69,22 +70,34 @@ export class UserModel extends Model<UserModel> implements IUser {
   })
   email: string;
 
+  @ApiHideProperty()
   @Required
   @Column({ type: DataType.VIRTUAL })
   password: string;
 
+  @ApiProperty({
+    type: () => [VoteModel],
+  })
   @HasMany(() => VoteModel, 'authorId')
   votes: VoteModel[];
 
+  @ApiProperty({
+    type: () => [PostModel],
+  })
   @HasMany(() => PostModel, 'authorId')
   posts: PostModel[];
 
+  @ApiProperty({
+    type: () => [CommentModel],
+  })
   @HasMany(() => CommentModel, 'authorId')
   comments: CommentModel[];
 
+  @ApiHideProperty()
   @Column
   hashedPassword: string;
 
+  @ApiHideProperty()
   @Column
   salt: string;
 

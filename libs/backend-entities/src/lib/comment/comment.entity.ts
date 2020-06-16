@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { ICommentMessage } from '@pesto/public-interfaces';
 import { IsUUID4, Required } from '@pesto/shared';
 import {
@@ -58,9 +59,11 @@ export class CommentModel extends Model<CommentModel>
 
   updatedAt: string;
 
+  @ApiProperty({ type: () => [PostModel] })
   @BelongsTo(() => PostModel)
   post: PostModel;
 
+  @ApiProperty({ type: () => [UserModel] })
   @BelongsTo(() => UserModel, 'authorId')
   author: UserModel;
 }

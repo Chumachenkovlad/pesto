@@ -16,7 +16,8 @@
                         "tsConfig": "apps/nest-posts-rest-api/tsconfig.app.json",
                         "assets": [
                             "apps/nest-posts-rest-api/src/assets"
-                        ]
+                        ],
+                        "webpackConfig": "apps/nest-posts-rest-api/webpack.config.ts"
                     },
                     "configurations": {
                         "production": {
