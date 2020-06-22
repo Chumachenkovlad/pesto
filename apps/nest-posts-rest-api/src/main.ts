@@ -17,7 +17,6 @@ async function bootstrap() {
     .setTitle('Pesto')
     .setDescription('Pesto Posts API Docs')
     .setVersion('1.0')
-    .addTag('pesto')
     .build();
 
   const document = SwaggerModule.createDocument(app, options);

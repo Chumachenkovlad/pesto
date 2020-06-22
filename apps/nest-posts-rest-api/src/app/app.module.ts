@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, RootDatabaseModule } from '@pesto/backend-nest-shared';
+import { AuthModule, ConfigModule, RootDatabaseModule } from '@pesto/backend-nest-shared';
 
 import { CategoriesModule } from './categories/categories.module';
 import { CommentsModule } from './comments/comments.module';
@@ -16,6 +16,7 @@ import { VotesModule } from './votes/votes.module';
     CommentsModule,
     ConfigModule,
     RootDatabaseModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

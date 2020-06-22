@@ -7,7 +7,6 @@ import {
     BeforeUpdate,
     Column,
     DataType,
-    Default,
     DefaultScope,
     HasMany,
     IsUrl,
@@ -24,14 +23,17 @@ import { VoteModel } from '../vote/vote.entity';
 const DEFAULT_BYTE_SIZE = 16;
 const DEFAULT_ITERATIONS = 10000;
 const DEFAULT_KEY_LENGTH = 64;
+const USER_ATTRIBUTES = ['id', 'lastName', 'firstName', 'avatarUrl'];
 
 @DefaultScope({
-  attributes: ['id', 'lastName', 'firstName', 'avatarUrl'],
+  attributes: USER_ATTRIBUTES,
   order: [['lastName', 'DESC']],
 })
 @Scopes({
+  auth: {},
   full: {
     include: [() => PostModel, () => CommentModel, () => VoteModel],
+    attributes: USER_ATTRIBUTES,
   },
 })
 @Table({
@@ -55,7 +57,6 @@ export class UserModel extends Model<UserModel> implements IUser {
   @Column
   lastName: string;
 
-  @Default('')
   @IsUrl
   @Column
   avatarUrl: string;
@@ -103,13 +104,13 @@ export class UserModel extends Model<UserModel> implements IUser {
 
   @BeforeCreate
   static async createPassword(user: UserModel) {
-    await user._updatePassword();
+    await user.updatePassword();
   }
 
   @BeforeUpdate
   static async updatePassword(user: UserModel) {
     if (user.changed('password')) {
-      await user._updatePassword();
+      await user.updatePassword();
     }
   }
 
@@ -134,7 +135,7 @@ export class UserModel extends Model<UserModel> implements IUser {
     return crypto.randomBytes(DEFAULT_BYTE_SIZE).toString('base64');
   }
 
-  private async _updatePassword() {
+  private async updatePassword() {
     if (this.password) {
       this.salt = await this.makeSalt();
       this.hashedPassword = this.encryptPassword(this.password);

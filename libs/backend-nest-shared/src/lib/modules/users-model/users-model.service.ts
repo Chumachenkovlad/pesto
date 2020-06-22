@@ -20,6 +20,6 @@ export class UsersModelService extends BaseEntityService<
   }
 
   async findByEmail(email: string): Promise<UserModel> {
-    return this.model.findOne<UserModel>({ where: { email } });
+    return this.model.scope('auth').findOne<UserModel>({ where: { email } });
   }
 }

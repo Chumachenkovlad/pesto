@@ -13,6 +13,7 @@ export function BaseEntityController<
   class EntityFindAllQuery extends BaseFindAllQuery {
     @ApiProperty({
       type: () => filterRef,
+      required: false,
     })
     filter?: F;
   }

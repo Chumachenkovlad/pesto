@@ -57,7 +57,7 @@ export abstract class BaseEntityService<
     protected sequelize: Sequelize
   ) {}
 
-  async create(dto: D) {
+  async create(dto: D): Promise<M> {
     const id = createUuid();
     const model = await this.model.create({ id, ...dto }, { raw: true });
     return this.findById(model.id);
@@ -77,7 +77,7 @@ export abstract class BaseEntityService<
     return this.findById(id);
   }
 
-  async findById(id: string, query: IFindOneQuery = {}) {
+  async findById(id: string, query: IFindOneQuery = {}): Promise<M> {
     const { scope } = query;
 
     let model = this.model;
@@ -86,7 +86,7 @@ export abstract class BaseEntityService<
       model = this.model.scope(scope);
     }
 
-    return model.findByPk(id);
+    return model.findByPk<M>(id);
   }
 
   async findAll(
