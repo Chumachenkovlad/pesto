@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@pesto/public-interfaces": [
+        "libs/public-interfaces/src/index.ts"
+      ],
+      "@pesto/backend-entities": [
+        "libs/backend-entities/src/index.ts"
+      ],
+      "@pesto/backend-nest-shared": [
+        "libs/backend-nest-shared/src/index.ts"
+      ],
+      "@pesto/shared": [
+        "libs/shared/src/index.ts"
+      ]
+    }
+  },
+  "extends": "../../../apps/nest-posts-rest-api/tsconfig.app.json"
+}
