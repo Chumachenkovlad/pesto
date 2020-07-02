@@ -1,26 +1,20 @@
 import { isNil } from 'lodash-es';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { userActions, userSelectors } from '../../slices/user/user.slice';
+import AuthDialog from '../auth/AuthDialog';
 import UserPlaceholder from './UserPlaceholder';
 
 export const Header = () => {
+  const [isAuthDialogOpened, setIsAuthDialogOpened] = useState(false);
+  const onCloseAuthDialog = () => setIsAuthDialogOpened(false);
+  const openAuthDialog = () => setIsAuthDialogOpened(true);
+
   const currentUser = useSelector(userSelectors.getCurrentUserSelector);
   const dispatch = useDispatch();
 
   const isLoggedIn = !isNil(currentUser);
-
-  const login = () => {
-    dispatch(
-      userActions.login({
-        email: 'chumachenko.vla@gmail.com',
-        password: '12345678',
-      })
-    );
-    console.log('test');
-  };
-  const register = () => dispatch(userActions.register({}));
   const logout = () => dispatch(userActions.logout());
 
   return (
@@ -32,11 +26,9 @@ export const Header = () => {
           <UserPlaceholder user={currentUser} />
         </>
       ) : (
-        <>
-          <button onClick={login}>Login</button>
-          <button onClick={register}>Register</button>
-        </>
+        <button onClick={openAuthDialog}>Login/Register</button>
       )}
+      <AuthDialog onClose={onCloseAuthDialog} open={isAuthDialogOpened} />
     </div>
   );
 };

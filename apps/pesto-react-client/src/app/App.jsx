@@ -10,6 +10,7 @@ export const App = () => {
     <div className="app">
       <Header></Header>
       <main>
+        <Route path="/auth" exact render={() => <div></div>} />
         <Route path="/posts" exact render={() => <div></div>} />
         <Route path="/posts/:id" exact render={() => <div></div>} />
         <Route path="/posts/:id/edit" exact render={() => <div></div>} />

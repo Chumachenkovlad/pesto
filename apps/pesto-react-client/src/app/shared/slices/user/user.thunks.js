@@ -10,25 +10,22 @@ const handleAuthPayload = ({ currentUser, token, expires }) => {
 
 export const login = createAsyncThunk(
   'user/login',
-  async (credentials, thunkAPI) => {
+  async (credentials, _thunkAPI) => {
     const payload = await authAPI.login(credentials);
-    console.log(payload);
     return handleAuthPayload(payload);
   }
 );
 
 export const loginByAuthToken = createAsyncThunk(
   'user/loginByAuthToken',
-  async (credentials, thunkAPI) => authAPI.loginByAuthToken(credentials)
+  async (credentials, _thunkAPI) => authAPI.loginByAuthToken(credentials)
 );
 
 export const register = createAsyncThunk(
   'user/register',
-  async (credentials, thunkAPI) => authAPI.register(credentials)
+  async (credentials, _thunkAPI) => authAPI.register(credentials)
 );
 
 export const logout = createAsyncThunk('user/logout', async () => {
   removeAuthToken();
-
-  return Promise.resolve();
 });

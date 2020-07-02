@@ -12,11 +12,10 @@ export const initialUserState = {
 };
 
 const onAuthRequestPending = state => {
-  return { ...state, error: false, loding: true };
+  return { ...state, error: false, loading: true };
 };
 
 const onAuthRequestFullfilled = (state, action) => {
-  console.log(action);
   return {
     ...state,
     currentUser: action.payload,
