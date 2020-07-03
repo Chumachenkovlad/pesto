@@ -18,12 +18,18 @@ export const login = createAsyncThunk(
 
 export const loginByAuthToken = createAsyncThunk(
   'user/loginByAuthToken',
-  async (credentials, _thunkAPI) => authAPI.loginByAuthToken(credentials)
+  async (data, _thunkAPI) => {
+    const payload = await authAPI.loginByAuthToken();
+    return handleAuthPayload(payload);
+  }
 );
 
 export const register = createAsyncThunk(
   'user/register',
-  async (credentials, _thunkAPI) => authAPI.register(credentials)
+  async (credentials, _thunkAPI) => {
+    const payload = authAPI.register(credentials);
+    return handleAuthPayload(payload);
+  }
 );
 
 export const logout = createAsyncThunk('user/logout', async () => {

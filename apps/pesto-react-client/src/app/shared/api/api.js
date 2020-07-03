@@ -1,4 +1,4 @@
-import { isNil } from 'lodash-es';
+import { isEmpty, isNil } from 'lodash-es';
 
 import { environment } from '../../../environments/environment';
 import { compose } from '../../shared/utils/functions';
@@ -32,7 +32,7 @@ export const addAuthorizationHeader = options => {
     return options;
   }
 
-  const authHeaders = { [AUTH_HEADER_KEY]: token };
+  const authHeaders = { [AUTH_HEADER_KEY]: `Bearer ${token}` };
 
   if (options.headers) {
     return {
@@ -62,11 +62,14 @@ export const _fetch = async options => {
   }
 };
 
-export function apiGet(path, query) {
-  const params = new URLSearchParams(query);
+export function apiGet(path, query = {}) {
+  const queryString =
+    isNil(query) || isEmpty(query)
+      ? ''
+      : `?${new URLSearchParams(query).toString()}`;
 
   return _fetch({
-    url: `${baseUrl}${path}?${params.toString()}`,
+    url: `${baseUrl}${path}${queryString}`,
     method: 'GET',
   });
 }

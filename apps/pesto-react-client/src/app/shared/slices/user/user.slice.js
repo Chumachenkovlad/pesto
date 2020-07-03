@@ -63,6 +63,7 @@ export const userActions = {
   login,
   register,
   logout,
+  loginByAuthToken,
 };
 
 export const getUserState = rootState => rootState[USER_FEATURE_KEY];

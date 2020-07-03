@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '@pesto/shared';
 
 import { UserModel } from './../../../../../backend-entities/src/lib/user/user.entity';
@@ -26,8 +26,9 @@ export class AuthController {
     return this.authService.register(authDto);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Get('authByToken')
+  @Get('loginByToken')
   async authByToken(@CurrentUser() user: UserModel): Promise<AuthPayloadDto> {
     return this.authService.loginByUserId(user.id);
   }
