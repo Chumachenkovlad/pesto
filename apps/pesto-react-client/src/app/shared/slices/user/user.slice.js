@@ -5,14 +5,8 @@ import { login, loginByAuthToken, logout, register } from './user.thunks';
 
 export const USER_FEATURE_KEY = 'user';
 
-const USER = {
-  id: 'test',
-  firstName: 'test',
-  lastName: 'test',
-};
-
 export const initialUserState = {
-  currentUser: USER,
+  currentUser: null,
   loading: false,
   error: null,
 };
