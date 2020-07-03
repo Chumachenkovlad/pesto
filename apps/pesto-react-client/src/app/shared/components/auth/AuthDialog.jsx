@@ -25,16 +25,18 @@ export default function AuthDialog(props) {
 
   const { onClose, open } = props;
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+
   const dispatch = useDispatch();
   const serverErrors = useSelector(userSelectors.getUserStateErrorSelector);
   const loading = useSelector(userSelectors.getUserStateLoadingSelector);
+  const isLoggedIn = useSelector(userSelectors.isLoggedInSelector);
 
   const login = credentials => dispatch(userActions.login(credentials));
   const register = credentials => dispatch(userActions.register(credentials));
-  const handleChange = (event, newValue) => setSelectedTabIndex(newValue);
+  const handleChange = (_event, newValue) => setSelectedTabIndex(newValue);
 
   return (
-    <Dialog onClose={onClose} open={open}>
+    <Dialog onClose={onClose} open={open && !isLoggedIn}>
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs onChange={handleChange} value={selectedTabIndex}>

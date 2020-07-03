@@ -5,8 +5,14 @@ import { login, loginByAuthToken, logout, register } from './user.thunks';
 
 export const USER_FEATURE_KEY = 'user';
 
+const USER = {
+  id: 'test',
+  firstName: 'test',
+  lastName: 'test',
+};
+
 export const initialUserState = {
-  currentUser: null,
+  currentUser: USER,
   loading: false,
   error: null,
 };
@@ -81,9 +87,15 @@ export const getUserStateErrorSelector = createSelector(
   pluck('error')
 );
 
+export const isLoggedInSelector = createSelector(
+  [getCurrentUserSelector],
+  Boolean
+);
+
 export const userSelectors = {
   getUserState,
   getCurrentUserSelector,
   getUserStateLoadingSelector,
   getUserStateErrorSelector,
+  isLoggedInSelector,
 };

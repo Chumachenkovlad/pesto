@@ -16,24 +16,12 @@ const schema = yup.object().shape({
 export default function LoginForm(props) {
   const classes = useAuthFormStyles();
   const { onSubmit, serverErrors, loading } = props;
-  const {
-    handleSubmit,
-    errors,
-    control,
-    formState: { isValid },
-  } = useForm({
+  const { handleSubmit, errors, control } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const formSubmit = formValue => {
-    console.log(isValid);
-    if (isValid) {
-      onSubmit(formValue);
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit(formSubmit)} className={classes.form}>
+    <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
       <Controller
         className={classes.formRow}
         as={
