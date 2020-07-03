@@ -29,6 +29,6 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('authByToken')
   async authByToken(@CurrentUser() user: UserModel): Promise<AuthPayloadDto> {
-    return this.authService.loginUserId(user.id);
+    return this.authService.loginByUserId(user.id);
   }
 }

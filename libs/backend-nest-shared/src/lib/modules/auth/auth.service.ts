@@ -53,7 +53,7 @@ export class AuthService {
     return { token, expires };
   }
 
-  async loginUserId(userId: string) {
+  async loginByUserId(userId: string) {
     const authPayload = this.createToken(userId);
     const currentUser = await this.usersModelService.findById(userId);
 
